@@ -1,6 +1,8 @@
 from items import Key
+from generic import Point
 import Image, ImageDraw
 import blocks, items
+
 
 MAX_HP = 100
 MAX_DURABILITY = 10
@@ -15,12 +17,6 @@ AREA_SIZE = (100, 100)
 PIXEL_SIZE = (30, 30)
 
 
-class Point(object):
-	def __init__(self, x=None, y=None):
-		self.x = x
-		self.y = y
-
-
 class Area(object):
 	blocks = []
 	items = []
@@ -29,21 +25,18 @@ class Area(object):
 
 	def generate(self, pixels):
 		for p in pixels:
-			print pixels[:3]
-			print [
+			obj = [
 				d[1] for d in PIXEL_MAPPING
-				if d[0] == pixels[:3]
+				if d[0] == p[0]
 			]
-
-
-			# obj = [
-			# 	d[1] for d in PIXEL_MAPPING
-			# 	if d[0] == pixels[:3]
-			# ][0]()
-			# if obj is Block:
-			# 	self.blocks.append(obj)
-			# if obj is Item:
-			# 	self.items.append(obj)
+			try:
+				obj = obj[0](p[1])
+			except IndexError:
+				continue
+			if issubclass(obj.__class__, blocks.Block):
+				self.blocks.append(obj)
+			if issubclass(obj.__class__, items.Item):
+				self.items.append(obj)
 
 
 class Map(object):
@@ -64,7 +57,12 @@ class Map(object):
 		pixels = []
 		for x in xrange(0, self.size[0], PIXEL_SIZE[0]):
 			for y in xrange(0, self.size[1], PIXEL_SIZE[1]):
-				pixels.append(self.pixels[x,y])
+				pixels.append((self.pixels[x,y], Point(x, y)))
 			if x >= AREA_SIZE[0]:
 				self.areas.append(Area(pixels))
 				pixels = []
+
+
+if __name__ == '__main__':
+	m = Map('map.png')
+	m.generate()
