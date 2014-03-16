@@ -1,14 +1,9 @@
-from items import Key
-from generic import Point, Size
-import Image, ImageDraw
-import blocks, items
+from generic import Point
+import things
 
 
 MAX_HP = 100
 MAX_DURABILITY = 10
-
-AREA_SIZE = Size(90, 90)
-BLOCK_SIZE = (3, 3)
 
 
 class Map(object):
@@ -16,7 +11,10 @@ class Map(object):
 
 
 class Maze(object):
-	pass
+	def __init__(self):
+		self.blocks = []
+		for x in range(0, 100):
+			self.blocks.append(things.Block(Point(x, x)))
 
 
 if __name__ == '__main__':

@@ -1,8 +1,45 @@
-import items
 from generic import Point
+from random import randint
 
 
-class Block(object):
+MAX_RARITY = 100
+
+
+class Thing(object):
+	def __init__(self):
+		self.element = None
+
+
+class Item(Thing):
+	rarity = 1
+	def __init__(self, void_rarity=False):
+		"""
+		if void_rarity, rarity isn't taken in account
+		to generate item
+		"""
+		if void_rarity:
+			return
+		if randint(0, MAX_RARITY) % max(self.rarity, 1):
+			raise EmptyItem
+
+
+class Key(Item):
+	rarity = 0
+
+
+class Battery(Item):
+	pass
+
+
+class Matchbox(Item):
+	pass
+
+
+class Safe(Item):
+	pass
+
+
+class Block(Thing):
 	COLOR = (255, 255, 255)
 	MAX_HP = 100
 	DURABILITY = 0 # 0: unbreakable, scale from 1 to MAX_DURABILITY
@@ -10,7 +47,6 @@ class Block(object):
 	CROSSABLE = False
 	OPENABLE = False
 	def __init__(self, coords):
-		self.element = None
 		self.hp = self.MAX_HP
 		self.coords = coords
 
@@ -44,4 +80,24 @@ class Door(Block):
 
 class LockedDoor(Door):
 	COLOR = (255, 100, 255)
-	OPENABLE = (items.Key,)
+	OPENABLE = (Key,)
+
+
+class EmptyItem(Exception):
+	pass
+
+
+class Inventory(object):
+	items = []
+
+
+class Body(Thing):
+	MAX_HP = None
+
+
+class Player(Body):
+	MAX_HP = 100
+
+
+class Creature(Body):
+	MAX_HP = 100
