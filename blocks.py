@@ -37,6 +37,9 @@ class Lava(Block):
 class Door(Block):
 	COLOR = (176, 123, 100)
 	OPENABLE = True
+	def __init__(self, coords):
+		super(Door, self).__init__(coords)
+		self.exit_to = None
 
 
 class LockedDoor(Door):
