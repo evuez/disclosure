@@ -21,6 +21,23 @@ def is_item(thing):
 		return False
 
 
+def count_exit(grid, x, y):
+	"""
+	count exit path for a given cell of
+	coordinates x,y
+	"""
+	count = 0
+	if grid[x][y+1] == 0:
+		count += 1
+	if grid[x][y-1] == 0:
+		count += 1
+	if grid[x+1][y] == 0:
+		count += 1
+	if grid[x-1][y] == 0:
+		count += 1
+	return count
+
+
 class Map(object):
 	"""
 	generate a map from a maze
@@ -58,8 +75,8 @@ class Map(object):
 		PLACE items no ends path, ie an empty case with only
 		one empty neighbor. mark those places as 4 in the maze generator
 		"""
-		if random.random() < 0.8:
-			return None
+		# if random.random() < 0.8:
+		# 	return None
 		try:
 			return getattr(things, random.choice(self.items))(coords)
 		except things.EmptyItem:
@@ -96,7 +113,7 @@ class Maze(object):
 		for neighbor in neighbors:
 			if not neighbor in self._visited_cells:
 				self._remove_wall(cell, neighbor)
-				self._visit_cell(neighbor, depth+1)
+				self._visit_cell(neighbor, depth + 1)
 		self._update_start_cell(cell, depth)
 
 	def _get_neighbors(self, cell):
