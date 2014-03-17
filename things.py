@@ -6,49 +6,63 @@ MAX_RARITY = 100
 
 
 class Thing(object):
-	def __init__(self):
+	COLOR = (255, 255, 255)
+	def __init__(self, coords):
 		self.element = None
+		self.coords = coords
+
+
+class FlagStart(Thing):
+	COLOR = (46, 204, 113)
+
+
+class FlagExit(Thing):
+	COLOR = (39, 174, 96)
 
 
 class Item(Thing):
-	rarity = 1
-	def __init__(self, void_rarity=False):
+	RARITY = 1
+	def __init__(self, coords, void_rarity=False):
 		"""
-		if void_rarity, rarity isn't taken in account
+		if void_rarity, RARITY isn't taken in account
 		to generate item
 		"""
+		super(Item, self).__init__(coords)
 		if void_rarity:
 			return
-		if randint(0, MAX_RARITY) % max(self.rarity, 1):
+		if randint(0, MAX_RARITY) % max(self.RARITY, 1):
 			raise EmptyItem
 
 
 class Key(Item):
-	rarity = 0
+	COLOR = (241, 196, 15)
+	RARITY = 99
 
 
 class Battery(Item):
-	pass
+	COLOR = (26, 188, 156)
+	RARITY = 75
 
 
 class Matchbox(Item):
-	pass
+	COLOR = (22, 160, 133)
+	RARITY = 20
 
 
 class Safe(Item):
-	pass
+	COLOR = (155, 89, 182)
+	RARITY = 90
 
 
 class Block(Thing):
-	COLOR = (255, 255, 255)
 	MAX_HP = 100
 	DURABILITY = 0 # 0: unbreakable, scale from 1 to MAX_DURABILITY
 	MOVEABLE = False # False, True or (required0, required1,)
 	CROSSABLE = False
 	OPENABLE = False
 	def __init__(self, coords):
+		super(Block, self).__init__(coords)
 		self.hp = self.MAX_HP
-		self.coords = coords
 
 	def take_hit(self, power):
 		self.hp -= self.DURABILITY / MAX_DURABILITY * power
@@ -57,29 +71,29 @@ class Block(Thing):
 
 
 class Brick(Block):
-	COLOR = (0, 0, 0)
+	COLOR = (44, 62, 80)
 
 
-class Wood(Block):
-	COLOR = (200, 100, 200)
+class Wood(Block): # added randomly in the walls, allows to break through a wall if got an axe or other
+	COLOR = (211, 84, 0)
 	DURABILITY = 1
 
 
-class Lava(Block):
-	COLOR = (255, 000, 000)
+class Lava(Block): # added randomly in the walls, allows to pass through if got the right suit
+	COLOR = (231, 76, 60)
 	CROSSABLE = True
 
 
 class Door(Block):
-	COLOR = (176, 123, 100)
+	COLOR = (149, 165, 166)
 	OPENABLE = True
 	def __init__(self, coords):
 		super(Door, self).__init__(coords)
 		self.exit_to = None
 
 
-class LockedDoor(Door):
-	COLOR = (255, 100, 255)
+class LockedDoor(Door): # added randomly in the walls, allows to pass through if got a key
+	COLOR = (127, 140, 141)
 	OPENABLE = (Key,)
 
 
