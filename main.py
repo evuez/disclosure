@@ -1,10 +1,19 @@
 # -*- coding: utf-8 -*-
 
 import Tkinter as tk
+from generic import Point
 from maze import Maze
+import things
 
 
 THING_SIZE = 30
+
+MAP_BLOCK = {
+	0: things.Lava, # path
+	1: things.Brick, # wall
+	2: things.Door, # exit
+	3: things.Door, # start
+}
 
 
 class Game(tk.Frame):
@@ -19,22 +28,26 @@ class Game(tk.Frame):
 		)
 		self.canvas.pack(side='top', fill='both', expand=True, padx=2, pady=2)
 
+		self.maze = Maze(width / THING_SIZE, height / THING_SIZE) # give it a random seed so that the user can share it with friends
 		self.draw_maze()
 
 	def draw_maze(self):
-		self.maze = Maze() # give it a random seed so that the user can share it with friends
-		for block in self.maze.blocks:
-			self.draw_thing(block)
+		for i,row in enumerate(self.maze.maze):
+			for j,col in enumerate(row):
+				try:
+					self.draw_thing(MAP_BLOCK[col](Point(i * THING_SIZE, j * THING_SIZE)))
+				except TypeError:
+					print "empty"
 
 	def draw_thing(self, thing):
 		"""
 		raise AttributeError
 		"""
 		thing.element = self.canvas.create_rectangle(
-			thing.coords.x - THING_SIZE / 2,
-			thing.coords.y - THING_SIZE / 2,
-			thing.coords.x + THING_SIZE / 2,
-			thing.coords.y + THING_SIZE / 2,
+			thing.coords.x,
+			thing.coords.y,
+			thing.coords.x + THING_SIZE,
+			thing.coords.y + THING_SIZE,
 			outline='#{0:02x}{1:02x}{2:02x}'.format(*thing.COLOR),
 			fill='#{0:02x}{1:02x}{2:02x}'.format(*thing.COLOR)
 		)
