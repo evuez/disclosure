@@ -2,7 +2,7 @@
 
 import Tkinter as tk
 from generic import Point, Size
-from area import Map
+from area import Area
 import things
 
 
@@ -26,30 +26,35 @@ class Game(tk.Frame):
 		)
 		self.canvas.pack(side='top', fill='both', expand=True, padx=2, pady=2)
 
-		self.map = Map(THING_COUNT, THING_COUNT) # give it a random seed so that the user can share it with friends
-		self.draw_map()
+		self.area = Area(THING_COUNT, THING_COUNT) # give it a random seed so that the user can share it with friends
+		self.draw_area()
 
 		self.bind_events()
 
-	def draw_map(self):
-		for thing in self.map.grid:
-			try:
-				self.draw_thing(thing)
-			except AttributeError:
-				pass
-			if isinstance(thing, things.Player):
-				self.player = thing
+	def draw_area(self):
+		for y,row in enumerate(self.area.grid):
+			for x,col in enumerate(row):
+				thing = self.area.grid[y][x]
+				try:
+					self.draw_thing(thing, x, y)
+				except AttributeError:
+					pass
+				else:
+					if isinstance(thing, things.Player):
+						self.player = thing
 		self.canvas.tag_raise(self.player.element)
 
-	def draw_thing(self, thing):
+	def draw_thing(self, thing, x, y):
 		"""
 		raise AttributeError
+		assign thing to self.player if it is
+		an instance of things.Player
 		"""
 		thing.element = self.canvas.create_rectangle(
-			thing.coords.x * self.THING_SIZE.w,
-			thing.coords.y * self.THING_SIZE.h,
-			thing.coords.x * self.THING_SIZE.w + self.THING_SIZE.w,
-			thing.coords.y * self.THING_SIZE.h + self.THING_SIZE.h,
+			x * self.THING_SIZE.w,
+			y * self.THING_SIZE.h,
+			x * self.THING_SIZE.w + self.THING_SIZE.w,
+			y * self.THING_SIZE.h + self.THING_SIZE.h,
 			width=0,
 			fill='#{0:02x}{1:02x}{2:02x}'.format(*thing.COLOR)
 		)
@@ -71,29 +76,26 @@ class Game(tk.Frame):
 		if event.keysym == 'Right':
 			x = 1
 
-		new_coords = Point(
-			self.player.coords.x + x,
-			self.player.coords.y + y
-		)
-
-		if self.can_goto(new_coords):
-			self.player.coords = new_coords
+		if self.can_goto(x, y):
 			self.canvas.move(
 				self.player.element,
 				x * self.THING_SIZE.w,
 				y * self.THING_SIZE.h
 			)
 
-	def can_goto(self, coords):
-		for thing in self.map.grid:
-			try:
-				print thing.coords, coords
-				if thing.coords == coords:
-					return False
-			except AttributeError:
-				pass
-		return True
+	def can_goto(self, x, y):
+		coords = self.get_thing_coords(self.player)
+		return not isinstance(
+			self.area.grid[y + coords[0]][x + coords[1]],
+			things.Block
+		)
 
+	def get_thing_coords(self, thing):
+		coords = self.canvas.coords(thing.element)
+		return (
+			int(coords[1] / self.THING_SIZE.w),
+			int(coords[0] / self.THING_SIZE.h)
+		)
 
 
 # a bell ring, when approching it rings louder, to indicate direction

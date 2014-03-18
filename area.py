@@ -14,6 +14,13 @@ MAP_BLOCK = {
 }
 
 
+def is_block(thing):
+	try:
+		return issubclass(getattr(things, thing), things.Block)
+	except TypeError:
+		return False
+
+
 def is_item(thing):
 	try:
 		return issubclass(getattr(things, thing), things.Item)
@@ -38,9 +45,9 @@ def count_exit(grid, x, y):
 	return count
 
 
-class Map(object):
+class Area(object):
 	"""
-	generate a map from a maze
+	generate an area from a maze
 	by adding blocks and items
 	"""
 	def __init__(self, width, height, seed=None): # add level argument
@@ -51,25 +58,31 @@ class Map(object):
 		self.create()
 
 	def create(self):
-		# self.grid = [[MAP_BLOCK[v] for v in row] for row in self.maze.grid]
-		self.grid = []
-		for y,row in enumerate(self.maze.grid):
-			for x,v in enumerate(row):
-				try:
-					self.grid.append(MAP_BLOCK[v](Point(x, y)))
-				except TypeError:
-					self.grid.append(self.add_item(Point(x, y)))
+		self.grid = [[self.add_thing(v) for v in r] for r in self.maze.grid]
+		# for y,row in enumerate(self.maze.grid):
+		# 	self.grid.append(y)
+		# 	for x,v in enumerate(row):
+		# 		try:
+		# 			self.grid.append(MAP_BLOCK[v](Point(x, y)))
+		# 		except TypeError:
+		# 			self.grid.append(self.add_item(Point(x, y)))
 
-	def add_item(self, coords):
+	def add_thing(self, thing):
+		try:
+			return MAP_BLOCK[thing]()
+		except TypeError:
+			return self.add_item()
+
+	def add_item(self):
 		"""
 		did wrong here
 		shoud calculate the probability of an item
-		to be on the map, not its probability to
-		probably be on the map
+		to be on the area, not its probability to
+		probably be on the area
 
 		i.e.: do a global random of how many times every items
-		shoud appear at max on the map based on a LEVEL and
-		add them to the map. if item return EmptyItem, then just
+		shoud appear at max on the area based on a LEVEL and
+		add them to the area. if item return EmptyItem, then just
 		don't add it
 
 		PLACE items no ends path, ie an empty case with only
@@ -78,7 +91,7 @@ class Map(object):
 		# if random.random() < 0.8:
 		# 	return None
 		try:
-			return getattr(things, random.choice(self.items))(coords)
+			return getattr(things, random.choice(self.items))()
 		except things.EmptyItem:
 			return None
 
@@ -171,4 +184,5 @@ class Maze(object):
 
 
 if __name__ == '__main__':
-	m = Map(21, 21)
+	m = Area(21, 21)
+	print m.grid

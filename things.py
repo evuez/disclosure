@@ -6,10 +6,13 @@ MAX_RARITY = 100
 
 
 class Thing(object):
+	"""
+	Things are not aware of their position,
+	only the area is aware of their position
+	"""
 	COLOR = (255, 255, 255)
-	def __init__(self, coords):
+	def __init__(self):
 		self.element = None
-		self.coords = coords
 
 
 class FlagExit(Thing):
@@ -18,12 +21,12 @@ class FlagExit(Thing):
 
 class Item(Thing):
 	RARITY = 1
-	def __init__(self, coords, void_rarity=False):
+	def __init__(self, void_rarity=False):
 		"""
 		if void_rarity, RARITY isn't taken in account
 		to generate item
 		"""
-		super(Item, self).__init__(coords)
+		super(Item, self).__init__()
 		if void_rarity:
 			return
 		if randint(0, MAX_RARITY) % max(self.RARITY, 1):
@@ -56,8 +59,8 @@ class Block(Thing):
 	MOVEABLE = False # False, True or (required0, required1,)
 	CROSSABLE = False
 	OPENABLE = False
-	def __init__(self, coords):
-		super(Block, self).__init__(coords)
+	def __init__(self):
+		super(Block, self).__init__()
 		self.hp = self.MAX_HP
 
 	def take_hit(self, power):
@@ -83,8 +86,8 @@ class Lava(Block): # added randomly in the walls, allows to pass through if got 
 class Door(Block):
 	COLOR = (149, 165, 166)
 	OPENABLE = True
-	def __init__(self, coords):
-		super(Door, self).__init__(coords)
+	def __init__(self):
+		super(Door, self).__init__()
 		self.exit_to = None
 
 
