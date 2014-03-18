@@ -29,12 +29,17 @@ class Game(tk.Frame):
 		self.map = Map(THING_COUNT, THING_COUNT) # give it a random seed so that the user can share it with friends
 		self.draw_map()
 
+		self.bind_events()
+
 	def draw_map(self):
 		for thing in self.map.grid:
 			try:
 				self.draw_thing(thing)
 			except AttributeError:
 				pass
+			if isinstance(thing, things.Player):
+				self.player = thing
+		self.canvas.tag_raise(self.player.element)
 
 	def draw_thing(self, thing):
 		"""
@@ -48,6 +53,46 @@ class Game(tk.Frame):
 			width=0,
 			fill='#{0:02x}{1:02x}{2:02x}'.format(*thing.COLOR)
 		)
+
+	def bind_events(self):
+		self.canvas.bind_all('<KeyPress-Up>', self.move_player)
+		self.canvas.bind_all('<KeyPress-Down>', self.move_player)
+		self.canvas.bind_all('<KeyPress-Left>', self.move_player)
+		self.canvas.bind_all('<KeyPress-Right>', self.move_player)
+
+	def move_player(self, event):
+		x = y = 0
+		if event.keysym == 'Up':
+			y = -1
+		if event.keysym == 'Down':
+			y = 1
+		if event.keysym == 'Left':
+			x = -1
+		if event.keysym == 'Right':
+			x = 1
+
+		new_coords = Point(
+			self.player.coords.x + x,
+			self.player.coords.y + y
+		)
+
+		if self.can_goto(new_coords):
+			self.player.coords = new_coords
+			self.canvas.move(
+				self.player.element,
+				x * self.THING_SIZE.w,
+				y * self.THING_SIZE.h
+			)
+
+	def can_goto(self, coords):
+		for thing in self.map.grid:
+			try:
+				print thing.coords, coords
+				if thing.coords == coords:
+					return False
+			except AttributeError:
+				pass
+		return True
 
 
 

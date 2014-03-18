@@ -12,10 +12,6 @@ class Thing(object):
 		self.coords = coords
 
 
-class FlagStart(Thing):
-	COLOR = (46, 204, 113)
-
-
 class FlagExit(Thing):
 	COLOR = (39, 174, 96)
 
@@ -110,6 +106,7 @@ class Body(Thing):
 
 
 class Player(Body):
+	COLOR = (46, 204, 113)
 	MAX_HP = 100
 
 

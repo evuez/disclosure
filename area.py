@@ -10,7 +10,7 @@ MAP_BLOCK = {
 	0: None, # path
 	1: things.Brick, # wall
 	2: things.FlagExit, # exit
-	3: things.FlagStart, # start
+	3: things.Player, # start
 }
 
 
@@ -43,7 +43,7 @@ class Map(object):
 	generate a map from a maze
 	by adding blocks and items
 	"""
-	def __init__(self, width, height, seed=None):
+	def __init__(self, width, height, seed=None): # add level argument
 		random.seed(seed)
 
 		self.items = [t for t in dir(things) if is_item(t)]
