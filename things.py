@@ -100,10 +100,6 @@ class EmptyItemException(Exception):
 	pass
 
 
-class Inventory(object):
-	items = []
-
-
 class Body(Thing):
 	MAX_HP = None
 
@@ -111,6 +107,12 @@ class Body(Thing):
 class Player(Body):
 	COLOR = (46, 204, 113)
 	MAX_HP = 100
+	def __init__(self):
+		super(Player, self).__init__()
+		self.inventory = []
+
+	def collect(self, item):
+		self.inventory.append(item)
 
 
 class Creature(Body):
