@@ -6,21 +6,27 @@ from area import Area
 import things
 
 
+AREA_HEIGHT = 630
 THING_COUNT = 21
+THING_SIZE = AREA_HEIGHT / THING_COUNT
+
+
+class NotWideEnoughException(Exception):
+	pass
 
 
 class Game(tk.Frame):
-	def __init__(self, parent, width=630, height=630):
-		self.THING_SIZE = Size(
-			width / THING_COUNT,
-			height / THING_COUNT
-		)
+	def __init__(self, parent, width=630, height=AREA_HEIGHT):
+		if width < AREA_HEIGHT:
+			raise NotWideEnoughException(
+				'Width must be greater than {}'.format(AREA_HEIGHT)
+			)
 
 		tk.Frame.__init__(self, parent)
 		self.canvas = tk.Canvas(
 			self,
 			highlightthickness=0,
-			width=width,
+			width=height,
 			height=height,
 			background='white'
 		)
@@ -50,11 +56,13 @@ class Game(tk.Frame):
 		assign thing to self.player if it is
 		an instance of things.Player
 		"""
+		# http://effbot.org/tkinterbook/canvas.htm#canvas.Canvas.create_image-method
+		# to use an image instead
 		thing.element = self.canvas.create_rectangle(
-			x * self.THING_SIZE.w,
-			y * self.THING_SIZE.h,
-			x * self.THING_SIZE.w + self.THING_SIZE.w,
-			y * self.THING_SIZE.h + self.THING_SIZE.h,
+			x * THING_SIZE,
+			y * THING_SIZE,
+			x * THING_SIZE + THING_SIZE,
+			y * THING_SIZE + THING_SIZE,
 			width=0,
 			fill='#{0:02x}{1:02x}{2:02x}'.format(*thing.COLOR)
 		)
@@ -79,8 +87,8 @@ class Game(tk.Frame):
 		if self.can_goto(x, y):
 			self.canvas.move(
 				self.player.element,
-				x * self.THING_SIZE.w,
-				y * self.THING_SIZE.h
+				x * THING_SIZE,
+				y * THING_SIZE
 			)
 
 	def can_goto(self, x, y):
@@ -93,8 +101,8 @@ class Game(tk.Frame):
 	def get_thing_coords(self, thing):
 		coords = self.canvas.coords(thing.element)
 		return (
-			int(coords[1] / self.THING_SIZE.w),
-			int(coords[0] / self.THING_SIZE.h)
+			int(coords[1] / THING_SIZE),
+			int(coords[0] / THING_SIZE)
 		)
 
 

@@ -30,7 +30,7 @@ class Item(Thing):
 		if void_rarity:
 			return
 		if randint(0, MAX_RARITY) % max(self.RARITY, 1):
-			raise EmptyItem
+			raise EmptyItemException
 
 
 class Key(Item):
@@ -96,7 +96,7 @@ class LockedDoor(Door): # added randomly in the walls, allows to pass through if
 	OPENABLE = (Key,)
 
 
-class EmptyItem(Exception):
+class EmptyItemException(Exception):
 	pass
 
 

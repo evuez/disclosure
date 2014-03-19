@@ -82,7 +82,7 @@ class Area(object):
 
 		i.e.: do a global random of how many times every items
 		shoud appear at max on the area based on a LEVEL and
-		add them to the area. if item return EmptyItem, then just
+		add them to the area. if item raise EmptyItemException, then just
 		don't add it
 
 		PLACE items no ends path, ie an empty case with only
@@ -92,7 +92,7 @@ class Area(object):
 		# 	return None
 		try:
 			return getattr(things, random.choice(self.items))()
-		except things.EmptyItem:
+		except things.EmptyItemException:
 			return None
 
 
