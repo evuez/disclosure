@@ -94,7 +94,7 @@ class Game(tk.Frame):
 	def can_goto(self, x, y):
 		coords = self.get_thing_coords(self.player)
 		return not isinstance(
-			self.area.grid[y + coords[0]][x + coords[1]],
+			self.area.grid[coords[0] + y][coords[1] + x],
 			things.Block
 		)
 
@@ -104,6 +104,10 @@ class Game(tk.Frame):
 			int(coords[1] / THING_SIZE),
 			int(coords[0] / THING_SIZE)
 		)
+
+	def collect_thing(self):
+		coords = self.get_thing_coords(self.player)
+
 
 
 # a bell ring, when approching it rings louder, to indicate direction
