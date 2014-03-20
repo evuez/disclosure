@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import Tkinter as tk
-from generic import Point, Size
+from generic import Point, Size, color_variant
 from area import Area
 import things
 
@@ -118,13 +118,26 @@ class Game(tk.Frame):
 
 	def remove_thing(self, thing):
 		coords = self.get_thing_coords(thing)
+		new_path = things.Path()
 
-		self.area.grid[coords[0]][coords[1]] = None
+		self.area.grid[coords[0]][coords[1]] = new_path
 		self.canvas.delete(thing.element)
+
+		self.draw_thing(new_path, coords[1], coords[0])
+		self.canvas.tag_raise(self.player.element)
 
 	def update_shadow(self):
 		#self.player.light.RANGE is the radius to ligh arount player
-		pass
+		for y,row in enumerate(self.area.grid):
+			for x,v in enumerate(row):
+				thing = self.area.grid[x][y]
+				# distance
+				self.canvas.itemconfig(
+					thing.element,
+					fill='#{0:02x}{1:02x}{2:02x}'.format(
+						*color_variant(thing.COLOR, 0.1)
+					)
+				)
 
 
 # a bell ring, when approching it rings louder, to indicate direction

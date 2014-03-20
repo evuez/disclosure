@@ -86,7 +86,7 @@ class Area(object):
 		try:
 			return getattr(things, random.choice(self.items))()
 		except things.EmptyItemException:
-			return None
+			return things.Path()
 
 
 class Maze(object):

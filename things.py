@@ -19,6 +19,10 @@ class FlagExit(Thing):
 	COLOR = (39, 174, 96)
 
 
+class Path(Thing):
+	COLOR = (255, 255, 255)
+
+
 class Item(Thing):
 	RARITY = 1
 	def __init__(self, void_rarity=False):
