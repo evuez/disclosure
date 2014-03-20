@@ -140,7 +140,7 @@ class Game(tk.Frame):
 					fill='#{0:02x}{1:02x}{2:02x}'.format(
 						*color_variant(thing.COLOR, 5 / distance)
 					)
-				)
+				) # create a StartFlag, player will be placed on it, but element at this case will remain a StartFlag
 
 
 # a bell ring, when approching it rings louder, to indicate direction
