@@ -138,7 +138,7 @@ class Game(tk.Frame):
 				self.canvas.itemconfig(
 					thing.element,
 					fill='#{0:02x}{1:02x}{2:02x}'.format(
-						*color_variant(thing.COLOR, THING_COUNT / distance)
+						*color_variant(thing.COLOR, 5 / distance)
 					)
 				)
 
