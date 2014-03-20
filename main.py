@@ -9,6 +9,8 @@ import things
 AREA_HEIGHT = 630
 THING_COUNT = 21
 THING_SIZE = AREA_HEIGHT / THING_COUNT
+SHADOW_COLOR = (0, 0, 0)
+PATH_COLOR = (255, 255, 255)
 
 
 class NotWideEnoughException(Exception):
@@ -49,6 +51,7 @@ class Game(tk.Frame):
 					if isinstance(thing, things.Player):
 						self.player = thing
 		self.canvas.tag_raise(self.player.element)
+		self.update_shadow()
 
 	def draw_thing(self, thing, x, y):
 		"""
@@ -64,7 +67,17 @@ class Game(tk.Frame):
 			x * THING_SIZE + THING_SIZE,
 			y * THING_SIZE + THING_SIZE,
 			width=0,
-			fill='#{0:02x}{1:02x}{2:02x}'.format(*thing.COLOR)
+			fill='#{0:02x}{1:02x}{2:02x}'.format(*SHADOW_COLOR)
+		)
+
+	def draw_empty(self, x, y, fill):
+		self.canvas.create_rectangle(
+			x * THING_SIZE,
+			y * THING_SIZE,
+			x * THING_SIZE + THING_SIZE,
+			y * THING_SIZE + THING_SIZE,
+			width=0,
+			fill='#{0:02x}{1:02x}{2:02x}'.format(*fill)
 		)
 
 	def bind_events(self):
@@ -91,6 +104,7 @@ class Game(tk.Frame):
 				y * THING_SIZE
 			)
 			self.collect_item()
+			self.update_shadow()
 
 	def can_goto(self, x, y):
 		coords = self.get_thing_coords(self.player)
@@ -118,6 +132,29 @@ class Game(tk.Frame):
 
 		self.area.grid[coords[0]][coords[1]] = None
 		self.canvas.delete(thing.element)
+
+	def update_shadow(self):
+		#self.player.light.RANGE is the radius to ligh arount player
+		l_range = 3
+
+		coords = self.get_thing_coords(self.player)
+
+		for i in xrange(-l_range, l_range):
+			for j in xrange(-l_range, l_range):
+				x = coords[0] + i
+				y = coords[1] + j
+
+				thing = self.area.grid[x][y]
+				try:
+					self.canvas.itemconfig(
+						thing.element,
+						fill='#{0:02x}{1:02x}{2:02x}'.format(*thing.COLOR)
+					)
+				except AttributeError:
+					self.draw_empty(x, y, PATH_COLOR)
+				except IndexError:
+					pass
+
 
 
 # a bell ring, when approching it rings louder, to indicate direction
