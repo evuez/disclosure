@@ -90,6 +90,7 @@ class Game(tk.Frame):
 				x * THING_SIZE,
 				y * THING_SIZE
 			)
+			self.collect_item()
 
 	def can_goto(self, x, y):
 		coords = self.get_thing_coords(self.player)
@@ -105,8 +106,9 @@ class Game(tk.Frame):
 			int(coords[0] / THING_SIZE)
 		)
 
-	def collect_thing(self):
+	def collect_item(self):
 		coords = self.get_thing_coords(self.player)
+		print self.area.grid[coords[0]][coords[1]]
 
 
 

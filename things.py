@@ -10,7 +10,7 @@ class Thing(object):
 	Things are not aware of their position,
 	only the area is aware of their position
 	"""
-	COLOR = (255, 255, 255)
+	COLOR = (0, 0, 0)
 	def __init__(self):
 		self.element = None
 

@@ -14,16 +14,27 @@ MAP_BLOCK = {
 }
 
 
+def is_child(child, parent):
+	"""
+	returns True if class child is child of class parent
+	and only if it is child, returns False otherwise
+	"""
+	try:
+		return issubclass(child, parent) and child is not parent
+	except TypeError:
+		return False
+
+
 def is_block(thing):
 	try:
-		return issubclass(getattr(things, thing), things.Block)
+		return is_child(getattr(things, thing), things.Block)
 	except TypeError:
 		return False
 
 
 def is_item(thing):
 	try:
-		return issubclass(getattr(things, thing), things.Item)
+		return is_child(getattr(things, thing), things.Item)
 	except TypeError:
 		return False
 
@@ -59,13 +70,6 @@ class Area(object):
 
 	def create(self):
 		self.grid = [[self.add_thing(v) for v in r] for r in self.maze.grid]
-		# for y,row in enumerate(self.maze.grid):
-		# 	self.grid.append(y)
-		# 	for x,v in enumerate(row):
-		# 		try:
-		# 			self.grid.append(MAP_BLOCK[v](Point(x, y)))
-		# 		except TypeError:
-		# 			self.grid.append(self.add_item(Point(x, y)))
 
 	def add_thing(self, thing):
 		try:
@@ -184,5 +188,8 @@ class Maze(object):
 
 
 if __name__ == '__main__':
-	m = Area(21, 21)
-	print m.grid
+	# m = Area(21, 21)
+	# print m.grid
+	print is_item('Item')
+	print is_item('Key')
+	print is_thing_child(things.Item, things.Item)
