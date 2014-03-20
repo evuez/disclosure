@@ -128,14 +128,17 @@ class Game(tk.Frame):
 
 	def update_shadow(self):
 		#self.player.light.RANGE is the radius to ligh arount player
+		player_coord = self.get_thing_coords(self.player)
 		for y,row in enumerate(self.area.grid):
 			for x,v in enumerate(row):
 				thing = self.area.grid[x][y]
-				# distance
+				distance = max(abs(player_coord[0] - x), 1)
+				distance = distance + max(abs(player_coord[1] - y), 1)
+				distance = distance / 2
 				self.canvas.itemconfig(
 					thing.element,
 					fill='#{0:02x}{1:02x}{2:02x}'.format(
-						*color_variant(thing.COLOR, 0.1)
+						*color_variant(thing.COLOR, THING_COUNT / distance)
 					)
 				)
 
