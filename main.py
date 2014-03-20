@@ -108,8 +108,16 @@ class Game(tk.Frame):
 
 	def collect_item(self):
 		coords = self.get_thing_coords(self.player)
-		self.player.collect(self.area.grid[coords[0]][coords[1]])
+		item = self.area.grid[coords[0]][coords[1]]
 
+		if self.player.collect(item):
+			self.remove_thing(item)
+
+	def remove_thing(self, thing):
+		coords = self.get_thing_coords(thing)
+
+		self.area.grid[coords[0]][coords[1]] = None
+		self.canvas.delete(thing.element)
 
 
 # a bell ring, when approching it rings louder, to indicate direction

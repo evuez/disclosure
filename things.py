@@ -114,6 +114,8 @@ class Player(Body):
 	def collect(self, item):
 		if is_child(item.__class__, Item):
 			self.inventory.append(item)
+			return True
+		return False
 
 
 class Creature(Body):
