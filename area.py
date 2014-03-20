@@ -1,4 +1,4 @@
-from generic import Point
+from generic import Point, is_child
 import random
 import things
 
@@ -12,17 +12,6 @@ MAP_BLOCK = {
 	2: things.FlagExit, # exit
 	3: things.Player, # start
 }
-
-
-def is_child(child, parent):
-	"""
-	returns True if class child is child of class parent
-	and only if it is child, returns False otherwise
-	"""
-	try:
-		return issubclass(child, parent) and child is not parent
-	except TypeError:
-		return False
 
 
 def is_block(thing):
@@ -192,4 +181,4 @@ if __name__ == '__main__':
 	# print m.grid
 	print is_item('Item')
 	print is_item('Key')
-	print is_thing_child(things.Item, things.Item)
+	print is_child(things.Item, things.Item)

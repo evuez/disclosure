@@ -1,4 +1,4 @@
-from generic import Point
+from generic import Point, is_child
 from random import randint
 
 
@@ -112,7 +112,8 @@ class Player(Body):
 		self.inventory = []
 
 	def collect(self, item):
-		self.inventory.append(item)
+		if is_child(item.__class__, Item):
+			self.inventory.append(item)
 
 
 class Creature(Body):

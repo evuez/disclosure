@@ -108,7 +108,7 @@ class Game(tk.Frame):
 
 	def collect_item(self):
 		coords = self.get_thing_coords(self.player)
-		print self.area.grid[coords[0]][coords[1]]
+		self.player.collect(self.area.grid[coords[0]][coords[1]])
 
 
 
