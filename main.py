@@ -10,7 +10,6 @@ AREA_HEIGHT = 630
 THING_COUNT = 21
 THING_SIZE = AREA_HEIGHT / THING_COUNT
 SHADOW_COLOR = (0, 0, 0)
-PATH_COLOR = (255, 255, 255)
 
 
 class NotWideEnoughException(Exception):
@@ -70,16 +69,6 @@ class Game(tk.Frame):
 			fill='#{0:02x}{1:02x}{2:02x}'.format(*thing.COLOR)
 		)
 
-	def draw_empty(self, x, y, fill):
-		self.canvas.create_rectangle(
-			x * THING_SIZE,
-			y * THING_SIZE,
-			x * THING_SIZE + THING_SIZE,
-			y * THING_SIZE + THING_SIZE,
-			width=0,
-			fill='#{0:02x}{1:02x}{2:02x}'.format(*fill)
-		)
-
 	def bind_events(self):
 		self.canvas.bind_all('<KeyPress-Up>', self.move_player)
 		self.canvas.bind_all('<KeyPress-Down>', self.move_player)
@@ -135,6 +124,7 @@ class Game(tk.Frame):
 
 	def update_shadow(self):
 		#self.player.light.RANGE is the radius to ligh arount player
+		pass
 
 
 # a bell ring, when approching it rings louder, to indicate direction
