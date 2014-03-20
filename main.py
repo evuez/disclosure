@@ -67,7 +67,7 @@ class Game(tk.Frame):
 			x * THING_SIZE + THING_SIZE,
 			y * THING_SIZE + THING_SIZE,
 			width=0,
-			fill='#{0:02x}{1:02x}{2:02x}'.format(*SHADOW_COLOR)
+			fill='#{0:02x}{1:02x}{2:02x}'.format(*thing.COLOR)
 		)
 
 	def draw_empty(self, x, y, fill):
@@ -135,26 +135,6 @@ class Game(tk.Frame):
 
 	def update_shadow(self):
 		#self.player.light.RANGE is the radius to ligh arount player
-		l_range = 3
-
-		coords = self.get_thing_coords(self.player)
-
-		for i in xrange(-l_range, l_range):
-			for j in xrange(-l_range, l_range):
-				x = coords[0] + i
-				y = coords[1] + j
-
-				thing = self.area.grid[x][y]
-				try:
-					self.canvas.itemconfig(
-						thing.element,
-						fill='#{0:02x}{1:02x}{2:02x}'.format(*thing.COLOR)
-					)
-				except AttributeError:
-					self.draw_empty(x, y, PATH_COLOR)
-				except IndexError:
-					pass
-
 
 
 # a bell ring, when approching it rings louder, to indicate direction
