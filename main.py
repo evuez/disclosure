@@ -42,13 +42,12 @@ class Game(tk.Frame):
 		for y,row in enumerate(self.area.grid):
 			for x,col in enumerate(row):
 				thing = self.area.grid[y][x]
-				try:
-					self.draw_thing(thing, x, y)
-				except AttributeError:
-					pass
-				else:
-					if isinstance(thing, things.Player):
-						self.player = thing
+
+				self.draw_thing(thing, x, y)
+				if isinstance(thing, things.FlagStart):
+					self.player = things.Player()
+					self.draw_thing(self.player, x, y)
+
 		self.canvas.tag_raise(self.player.element)
 		self.update_shadow()
 

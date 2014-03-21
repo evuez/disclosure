@@ -10,7 +10,7 @@ MAP_BLOCK = {
 	0: None, # path
 	1: things.Brick, # wall
 	2: things.FlagExit, # exit
-	3: things.Player, # start
+	3: things.FlagStart, # start
 }
 
 
