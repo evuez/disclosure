@@ -19,6 +19,10 @@ class FlagExit(Thing):
 	COLOR = (39, 174, 96)
 
 
+class FlagStart(Thing):
+	COLOR = (0, 230, 0)
+
+
 class Path(Thing):
 	COLOR = (255, 255, 255)
 

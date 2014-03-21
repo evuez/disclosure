@@ -18,19 +18,8 @@ def is_child(child, parent):
 		return False
 
 
-def clamp(val, minimum=0, maximum=255):
-    if val < minimum:
-        return minimum
-    if val > maximum:
-        return maximum
-    return val
-
-def color_variant(color, scalefactor=1):
+def color_variant(color, scale=1):
 	"""
 	darken or lighten a color
 	"""
-	r,g,b = color
-	r = clamp(r * scalefactor)
-	g = clamp(g * scalefactor)
-	b = clamp(b * scalefactor)
-	return (int(r), int(g), int(b))
+	return map(lambda x: int(min(max(x * scale, 0), 255)), color)

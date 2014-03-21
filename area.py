@@ -64,9 +64,9 @@ class Area(object):
 		try:
 			return MAP_BLOCK[thing]()
 		except TypeError:
-			return self.add_item()
+			return self.fill_path()
 
-	def add_item(self):
+	def fill_path(self):
 		"""
 		did wrong here
 		shoud calculate the probability of an item
