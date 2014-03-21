@@ -7,7 +7,7 @@ import things
 
 
 AREA_HEIGHT = 630
-THING_COUNT = 21
+THING_COUNT = 13
 THING_SIZE = AREA_HEIGHT / THING_COUNT
 SHADOW_COLOR = (0, 0, 0)
 
@@ -94,6 +94,8 @@ class Game(tk.Frame):
 			self.player.move()
 			self.collect_item()
 			self.update_shadow()
+			if self.has_won():
+				print 'self.new_map(THING_COUNT + 2)'
 
 	def can_goto(self, x, y):
 		coords = self.get_thing_coords(self.player)
@@ -145,6 +147,13 @@ class Game(tk.Frame):
 							radius / distance(player_coords, (x,y)))
 					)
 				)
+
+	def has_won(self):
+		coords = self.get_thing_coords(self.player)
+		return isinstance(
+			self.area.grid[coords[0]][coords[1]],
+			things.FlagExit
+		)
 
 
 # a bell ring, when approching it rings louder, to indicate direction
