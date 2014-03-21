@@ -76,7 +76,7 @@ class Flashlight(Light):
 	RADIUS = 4
 
 
-class Matchbox(Light):
+class Matchstick(Light):
 	COLOR = (22, 160, 133)
 	RARITY = 20
 	RADIUS = 1
