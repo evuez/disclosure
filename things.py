@@ -40,7 +40,7 @@ class Item(Thing):
 		super(Item, self).__init__()
 		if void_rarity:
 			return
-		if randint(0, MAX_RARITY) % max(self.RARITY, 1):
+		if randint(1, MAX_RARITY) % max(self.RARITY, 1):
 			raise EmptyItemException
 
 
