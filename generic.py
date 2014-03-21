@@ -23,3 +23,10 @@ def color_variant(color, scale=1):
 	darken or lighten a color
 	"""
 	return map(lambda x: int(min(max(x * scale, 0), 255)), color)
+
+
+def distance(coords1, coords2):
+	return (
+		max(abs(coords1[0] - coords2[0]), 1) +
+		max(abs(coords1[1] - coords2[1]), 1)
+	) / 2
