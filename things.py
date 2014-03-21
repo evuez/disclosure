@@ -3,6 +3,7 @@ from random import randint
 
 
 MAX_RARITY = 100
+GOD_RARITY = MAX_RARITY + 1
 
 
 class Thing(object):
@@ -52,7 +53,7 @@ class Safe(Item):
 
 
 class Light(Item):
-	RARITY = 999
+	RARITY = GOD_RARITY
 	RADIUS = 0
 	@property
 	def radius(self):
@@ -132,7 +133,7 @@ class Player(Body):
 
 	def collect(self, item):
 		if is_child(item.__class__, Light):
-			self.light = item
+			self.light = item # take light with best radius from inventory
 		if is_child(item.__class__, Item):
 			self.inventory.append(item)
 			return True
