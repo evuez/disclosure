@@ -130,7 +130,7 @@ class Game(tk.Frame):
 		try:
 			radius = self.player.light.radius
 		except AttributeError:
-			radius = 4
+			radius = 0
 
 		player_coords = self.get_thing_coords(self.player)
 		for y,row in enumerate(self.area.grid):
