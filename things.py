@@ -165,9 +165,6 @@ class Inventory(list):
 	def __init__(self, *args):
 		super(Inventory, self).__init__(args)
 
-	def append(self, item):
-		super(Inventory, self).append(item)
-
 	@property
 	def lights(self):
 		return (x for x in self if is_child(x.__class__, Light))
@@ -175,6 +172,6 @@ class Inventory(list):
 	@property
 	def best_light(self):
 		try:
-			return max(self.lights, lambda x: x.radius)
+			return max(self.lights, key=lambda x: x.radius)
 		except ValueError:
 			return None
