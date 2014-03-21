@@ -5,6 +5,8 @@ from random import randint
 MAX_RARITY = 100
 GOD_RARITY = MAX_RARITY + 1
 
+LIGHT_WEAR_RATE = 0.1
+
 
 class Thing(object):
 	"""
@@ -55,9 +57,17 @@ class Safe(Item):
 class Light(Item):
 	RARITY = GOD_RARITY
 	RADIUS = 0
+	def __init__(self):
+		super(Light, self).__init__()
+		self.wear_level = 1
+
 	@property
 	def radius(self):
-	    return self.RADIUS
+		return self.RADIUS * self.wear_level
+
+	def light(self):
+		self.wear_level -= LIGHT_WEAR_RATE
+
 
 
 class Flashlight(Light):
@@ -138,6 +148,12 @@ class Player(Body):
 			self.inventory.append(item)
 			return True
 		return False
+
+	def move(self):
+		try:
+			self.light.light()
+		except AttributeError:
+			pass
 
 
 class Creature(Body):

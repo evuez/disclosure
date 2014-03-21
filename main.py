@@ -91,6 +91,7 @@ class Game(tk.Frame):
 				x * THING_SIZE,
 				y * THING_SIZE
 			)
+			self.player.move()
 			self.collect_item()
 			self.update_shadow()
 
