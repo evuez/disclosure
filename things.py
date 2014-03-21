@@ -72,13 +72,13 @@ class Light(Item):
 
 class Flashlight(Light):
 	COLOR = (26, 188, 156)
-	RARITY = 75
+	RARITY = 65
 	RADIUS = 4
 
 
 class Matchstick(Light):
 	COLOR = (22, 160, 133)
-	RARITY = 20
+	RARITY = 10
 	RADIUS = 1
 
 
@@ -154,7 +154,7 @@ class Player(Body):
 
 	@property
 	def light(self):
-		return self.inventory.best_light
+		return self.inventory.light
 
 
 class Creature(Body):
@@ -163,15 +163,17 @@ class Creature(Body):
 
 class Inventory(list):
 	def __init__(self, *args):
-		super(Inventory, self).__init__(args)
+		super(Inventory, self).__init__(args) # can improve here by adding lights to light on append(), avoid lights() iteration
 
 	@property
 	def lights(self):
 		return (x for x in self if is_child(x.__class__, Light))
 
 	@property
-	def best_light(self):
+	def light(self):
 		try:
-			return max(self.lights, key=lambda x: x.radius)
+			return next(x for x in self.lights if x.radius > 0)
 		except ValueError:
+			return None
+		except StopIteration:
 			return None
