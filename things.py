@@ -138,12 +138,9 @@ class Player(Body):
 	MAX_HP = 100
 	def __init__(self):
 		super(Player, self).__init__()
-		self.inventory = []
-		self.light = Flashlight(True)
+		self.inventory = Inventory(Flashlight(True))
 
 	def collect(self, item):
-		if is_child(item.__class__, Light):
-			self.light = item # take light with best radius from inventory
 		if is_child(item.__class__, Item):
 			self.inventory.append(item)
 			return True
@@ -155,6 +152,29 @@ class Player(Body):
 		except AttributeError:
 			pass
 
+	@property
+	def light(self):
+		return self.inventory.best_light
+
 
 class Creature(Body):
 	MAX_HP = 100
+
+
+class Inventory(list):
+	def __init__(self, *args):
+		super(Inventory, self).__init__(args)
+
+	def append(self, item):
+		super(Inventory, self).append(item)
+
+	@property
+	def lights(self):
+		return (x for x in self if is_child(x.__class__, Light))
+
+	@property
+	def best_light(self):
+		try:
+			return max(self.lights, lambda x: x.radius)
+		except ValueError:
+			return None
