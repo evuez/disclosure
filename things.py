@@ -51,14 +51,24 @@ class Safe(Item):
 	RARITY = 90
 
 
-class Battery(Item):
+class Light(Item):
+	RARITY = 999
+	RADIUS = 0
+	@property
+	def radius(self):
+	    return self.RADIUS
+
+
+class Flashlight(Light):
 	COLOR = (26, 188, 156)
 	RARITY = 75
+	RADIUS = 4
 
 
-class Matchbox(Item):
+class Matchbox(Light):
 	COLOR = (22, 160, 133)
 	RARITY = 20
+	RADIUS = 1
 
 
 class Block(Thing):
@@ -121,6 +131,8 @@ class Player(Body):
 		self.light = None
 
 	def collect(self, item):
+		if is_child(item.__class__, Light):
+			self.light = item
 		if is_child(item.__class__, Item):
 			self.inventory.append(item)
 			return True
