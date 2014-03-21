@@ -126,7 +126,11 @@ class Game(tk.Frame):
 		self.canvas.tag_raise(self.player.element)
 
 	def update_shadow(self):
-		#self.player.light.RANGE is the radius to ligh arount player
+		try:
+			radius = self.player.light.radius
+		except AttributeError:
+			radius = 4
+
 		player_coords = self.get_thing_coords(self.player)
 		for y,row in enumerate(self.area.grid):
 			for x,v in enumerate(row):
@@ -137,9 +141,9 @@ class Game(tk.Frame):
 					fill='#{0:02x}{1:02x}{2:02x}'.format(
 						*color_variant(
 							thing.COLOR,
-							5 / distance(player_coords, (x,y)))
+							radius / distance(player_coords, (x,y)))
 					)
-				) # create a StartFlag, player will be placed on it, but element at this case will remain a StartFlag
+				)
 
 
 # a bell ring, when approching it rings louder, to indicate direction

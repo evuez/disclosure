@@ -46,6 +46,11 @@ class Key(Item):
 	RARITY = 99
 
 
+class Safe(Item):
+	COLOR = (155, 89, 182)
+	RARITY = 90
+
+
 class Battery(Item):
 	COLOR = (26, 188, 156)
 	RARITY = 75
@@ -54,11 +59,6 @@ class Battery(Item):
 class Matchbox(Item):
 	COLOR = (22, 160, 133)
 	RARITY = 20
-
-
-class Safe(Item):
-	COLOR = (155, 89, 182)
-	RARITY = 90
 
 
 class Block(Thing):
@@ -118,6 +118,7 @@ class Player(Body):
 	def __init__(self):
 		super(Player, self).__init__()
 		self.inventory = []
+		self.light = None
 
 	def collect(self, item):
 		if is_child(item.__class__, Item):
