@@ -14,6 +14,7 @@ class Thing(object):
 	only the area is aware of their position
 	"""
 	COLOR = (0, 0, 0)
+	EMPTY = False
 	def __init__(self):
 		self.element = None
 
@@ -67,6 +68,8 @@ class Light(Item):
 
 	def light(self):
 		self.wear_level -= LIGHT_WEAR_RATE
+		if self.wear_level < 0:
+			self.EMPTY = True
 
 
 
@@ -138,6 +141,10 @@ class Player(Body):
 	MAX_HP = 100
 	def __init__(self):
 		super(Player, self).__init__()
+		self.refresh()
+		self.level = 0
+
+	def refresh(self):
 		self.inventory = Inventory(Flashlight(True))
 
 	def collect(self, item):
@@ -151,6 +158,9 @@ class Player(Body):
 			self.light.light()
 		except AttributeError:
 			pass
+
+	def level_up(self):
+		self.level += 1
 
 	@property
 	def light(self):
@@ -177,3 +187,8 @@ class Inventory(list):
 			return None
 		except StopIteration:
 			return None
+
+	@property
+	def unused(self):
+	    return (x for x in self if not x.EMPTY)
+
