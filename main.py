@@ -2,6 +2,7 @@
 
 import Tkinter as tk
 import tkFont
+from uuid import uuid4
 from collections import Counter
 from generic import Point, Size, color_variant, distance
 from area import Area
@@ -72,9 +73,11 @@ class Game(tk.Frame):
 		)
 
 	def new(self):
+		self.seed = '{}-{}'.format (str(uuid4())[:8], self.player.level)
+
 		self.player.refresh()
 		self.canvas.delete('all')
-		self.area = Area(self.thing_count, self.thing_count) # give it a random seed so that the user can share it with friends
+		self.area = Area(self.thing_count, self.thing_count, self.seed)
 		self.draw_area()
 		self.draw_inventory()
 

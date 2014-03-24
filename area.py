@@ -77,12 +77,7 @@ class Area(object):
 		shoud appear at max on the area based on a LEVEL and
 		add them to the area. if item raise EmptyItemException, then just
 		don't add it
-
-		PLACE items no ends path, ie an empty case with only
-		one empty neighbor. mark those places as 4 in the maze generator
 		"""
-		# if random.random() < 0.8:
-		# 	return None
 		try:
 			return getattr(things, random.choice(self.items))()
 		except things.EmptyItemException:
