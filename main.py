@@ -9,7 +9,7 @@ import things
 
 
 AREA_HEIGHT = 630
-THING_COUNT = 9 # seemed OK on linux, check if python version is different (division / int / float management)
+THING_COUNT = 5
 SHADOW_COLOR = (0, 0, 0)
 INVENTORY = Size(AREA_HEIGHT, 60)
 
@@ -61,7 +61,7 @@ class Game(tk.Frame):
 
 	@property
 	def thing_count(self):
-		return THING_COUNT + self.player.level * 4
+		return THING_COUNT + self.player.level * 2
 
 	def font(self, size=14, weight='bold'):
 		return tkFont.Font(
@@ -147,7 +147,7 @@ class Game(tk.Frame):
 		)
 
 	def get_thing_coords(self, thing):
-		coords = self.canvas.coords(thing.element)
+		coords = map(round, self.canvas.coords(thing.element))
 		return (
 			int(coords[1] / self.thing_size),
 			int(coords[0] / self.thing_size)
