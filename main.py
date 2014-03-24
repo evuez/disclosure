@@ -267,8 +267,9 @@ class Game(tk.Frame):
 			self.new(seed)
 		elif cmd == 'reload' or cmd == 'new':
 			self.new()
-
-
+		elif cmd == 'sun':
+			self.player.inventory.append(things.Sun(True))
+			self.draw_inventory()
 
 
 # a bell ring, when approching it rings louder, to indicate direction

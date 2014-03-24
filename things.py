@@ -85,6 +85,12 @@ class Matchstick(Light):
 	RADIUS = 1
 
 
+class Sun(Light):
+	COLOR = (0, 255, 255)
+	RARITY = GOD_RARITY
+	RADIUS = 20
+
+
 class Block(Thing):
 	MAX_HP = 100
 	DURABILITY = 0 # 0: unbreakable, scale from 1 to MAX_DURABILITY
