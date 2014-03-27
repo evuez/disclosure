@@ -50,11 +50,6 @@ class Key(Item):
 	RARITY = 99
 
 
-class Safe(Item):
-	COLOR = (155, 89, 182)
-	RARITY = 90
-
-
 class Light(Item):
 	RARITY = GOD_RARITY
 	RADIUS = 0
@@ -163,7 +158,7 @@ class Player(Body):
 
 	def refresh(self):
 		try:
-			self.inventory = Inventory(*self.inventory.all_but_lights)
+			self.inventory = Inventory(*self.inventory.keys)
 		except AttributeError:
 			self.inventory = Inventory(Flashlight(True))
 		else:
@@ -211,8 +206,8 @@ class Inventory(list):
 			return None
 
 	@property
-	def all_but_lights(self):
-	    return (x for x in self if not is_child(x.__class__, Light))
+	def keys(self):
+	    return (x for x in self if x.__class__ is Key)
 
 	@property
 	def unused(self):
