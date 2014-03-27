@@ -162,7 +162,12 @@ class Player(Body):
 		self.level = 0
 
 	def refresh(self):
-		self.inventory = Inventory(Flashlight(True))
+		try:
+			self.inventory = Inventory(*self.inventory.all_but_lights)
+		except AttributeError:
+			self.inventory = Inventory(Flashlight(True))
+		else:
+			self.inventory.append(Flashlight(True))
 
 	def collect(self, item):
 		if is_child(item.__class__, Item):
@@ -190,7 +195,7 @@ class Creature(Body):
 
 class Inventory(list):
 	def __init__(self, *args):
-		super(Inventory, self).__init__(args) # can improve here by adding lights to light on append(), avoid lights() iteration
+		super(Inventory, self).__init__(args)
 
 	@property
 	def lights(self):
@@ -206,6 +211,9 @@ class Inventory(list):
 			return None
 
 	@property
+	def all_but_lights(self):
+	    return (x for x in self if not is_child(x.__class__, Light))
+
+	@property
 	def unused(self):
 	    return (x for x in self if not x.EMPTY)
-
