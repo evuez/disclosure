@@ -72,6 +72,17 @@ class Light(Item):
 			self.EMPTY = True
 
 
+class Matchstick(Light):
+	COLOR = (22, 160, 133)
+	RARITY = 10
+	RADIUS = 1
+
+
+class Lantern(Light):
+	COLOR = (3, 166, 120)
+	RARITY = 20
+	RADIUS = 2
+
 
 class Flashlight(Light):
 	COLOR = (26, 188, 156)
@@ -79,10 +90,10 @@ class Flashlight(Light):
 	RADIUS = 4
 
 
-class Matchstick(Light):
-	COLOR = (22, 160, 133)
-	RARITY = 10
-	RADIUS = 1
+class Neon(Light):
+	COLOR = (42, 187, 155)
+	RARITY = 75
+	RADIUS = 5
 
 
 class Sun(Light):
