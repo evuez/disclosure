@@ -45,7 +45,11 @@ class Item(Thing):
 			raise EmptyItemException
 
 
-class Key(Item):
+class PassThrough(Item):
+	RARITY = GOD_RARITY
+
+
+class Key(PassThrough):
 	COLOR = (241, 196, 15)
 	RARITY = 99
 
@@ -134,7 +138,7 @@ class Player(Body):
 
 	def refresh(self):
 		try:
-			self.inventory = Inventory(*self.inventory.keys)
+			self.inventory = Inventory(*self.inventory.pass_throughs)
 		except AttributeError:
 			self.inventory = Inventory(Flashlight(True))
 		else:
@@ -182,8 +186,17 @@ class Inventory(list):
 			return None
 
 	@property
-	def keys(self):
-	    return (x for x in self if x.__class__ is Key)
+	def pass_throughs(self):
+		return (x for x in self if is_child(x.__class__, PassThrough))
+
+	@property
+	def pass_through(self):
+		try:
+			return next(x for x in self.pass_throughs if not x.EMPTY)
+		except ValueError:
+			return None
+		except StopIteration:
+			return None
 
 	@property
 	def unused(self):
