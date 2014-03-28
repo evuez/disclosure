@@ -10,7 +10,7 @@ MAP_BLOCK = {
 	0: None, # path
 	1: things.Brick, # wall
 	2: things.FlagExit, # exit
-	3: things.Player, # start
+	3: things.FlagStart, # start
 }
 
 
@@ -64,9 +64,9 @@ class Area(object):
 		try:
 			return MAP_BLOCK[thing]()
 		except TypeError:
-			return self.add_item()
+			return self.fill_path()
 
-	def add_item(self):
+	def fill_path(self):
 		"""
 		did wrong here
 		shoud calculate the probability of an item
@@ -77,16 +77,11 @@ class Area(object):
 		shoud appear at max on the area based on a LEVEL and
 		add them to the area. if item raise EmptyItemException, then just
 		don't add it
-
-		PLACE items no ends path, ie an empty case with only
-		one empty neighbor. mark those places as 4 in the maze generator
 		"""
-		# if random.random() < 0.8:
-		# 	return None
 		try:
 			return getattr(things, random.choice(self.items))()
 		except things.EmptyItemException:
-			return None
+			return things.Path()
 
 
 class Maze(object):

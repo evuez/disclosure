@@ -1,3 +1,6 @@
 disclosure.sublime-*
 *.pyc
 tests.*
+build/
+dist/
+*.spec
