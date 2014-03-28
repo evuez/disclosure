@@ -156,10 +156,21 @@ class Game(tk.Frame):
 
 	def can_goto(self, x, y):
 		coords = self.get_thing_coords(self.player)
-		return not isinstance(
-			self.area.grid[coords[0] + y][coords[1] + x],
-			things.Block
-		)
+		try:
+			thing = self.area.grid[coords[0] + y][coords[1] + x]
+		except IndexError:
+			return False
+		if coords[0] + y < 0:
+			return False
+		if coords[1] + x < 0:
+			return False
+		if not isinstance(thing, things.Block):
+			return True
+		try:
+			self.player.inventory.pass_through.use()
+			return True
+		except AttributeError:
+			return False
 
 	def get_thing_coords(self, thing):
 		coords = map(round, self.canvas.coords(thing.element))

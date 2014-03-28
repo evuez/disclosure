@@ -48,6 +48,9 @@ class Item(Thing):
 class PassThrough(Item):
 	RARITY = GOD_RARITY
 
+	def use(self):
+		self.EMPTY = True
+
 
 class Key(PassThrough):
 	COLOR = (241, 196, 15)
