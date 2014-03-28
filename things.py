@@ -100,9 +100,8 @@ class Sun(Light):
 class Block(Thing):
 	MAX_HP = 100
 	DURABILITY = 0 # 0: unbreakable, scale from 1 to MAX_DURABILITY
-	MOVEABLE = False # False, True or (required0, required1,)
-	CROSSABLE = False
-	OPENABLE = False
+	CROSSABLE = False # False, True or (required0, required1,)
+	OPENABLE = False # False, True or (required0, required1,)
 	def __init__(self):
 		super(Block, self).__init__()
 		self.hp = self.MAX_HP
@@ -120,19 +119,17 @@ class Brick(Block):
 class Wood(Block): # added randomly in the walls, allows to break through a wall if got an axe or other
 	COLOR = (211, 84, 0)
 	DURABILITY = 1
+	CROSSABLE = True # (Axe, ...)
 
 
 class Lava(Block): # added randomly in the walls, allows to pass through if got the right suit
 	COLOR = (231, 76, 60)
-	CROSSABLE = True
+	CROSSABLE = True # (FireSuit, ...)
 
 
 class Door(Block):
 	COLOR = (149, 165, 166)
 	OPENABLE = True
-	def __init__(self):
-		super(Door, self).__init__()
-		self.exit_to = None
 
 
 class LockedDoor(Door): # added randomly in the walls, allows to pass through if got a key
@@ -211,4 +208,4 @@ class Inventory(list):
 
 	@property
 	def unused(self):
-	    return (x for x in self if not x.EMPTY)
+		return (x for x in self if not x.EMPTY)
