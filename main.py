@@ -270,6 +270,8 @@ class Game(tk.Frame):
 		elif cmd == 'sun':
 			self.player.inventory.append(things.Sun(True))
 			self.draw_inventory()
+		elif cmd == 'black is black':
+			self.player.COLOR = (0, 0, 0)
 
 
 # a bell ring, when approching it rings louder, to indicate direction
