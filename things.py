@@ -47,12 +47,21 @@ class Item(Thing):
 
 class PassThrough(Item):
 	RARITY = GOD_RARITY
-
 	def use(self):
 		self.EMPTY = True
 
 
-class Key(PassThrough):
+class Axe(PassThrough):
+	COLOR = (241, 196, 15)
+	RARITY = 99
+
+
+class Poleaxe(PassThrough):
+	COLOR = (241, 196, 15)
+	RARITY = 99
+
+
+class Crowbar(PassThrough):
 	COLOR = (241, 196, 15)
 	RARITY = 99
 
