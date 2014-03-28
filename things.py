@@ -116,27 +116,6 @@ class Brick(Block):
 	COLOR = (44, 62, 80)
 
 
-class Wood(Block): # added randomly in the walls, allows to break through a wall if got an axe or other
-	COLOR = (211, 84, 0)
-	DURABILITY = 1
-	CROSSABLE = True # (Axe, ...)
-
-
-class Lava(Block): # added randomly in the walls, allows to pass through if got the right suit
-	COLOR = (231, 76, 60)
-	CROSSABLE = True # (FireSuit, ...)
-
-
-class Door(Block):
-	COLOR = (149, 165, 166)
-	OPENABLE = True
-
-
-class LockedDoor(Door): # added randomly in the walls, allows to pass through if got a key
-	COLOR = (127, 140, 141)
-	OPENABLE = (Key,)
-
-
 class EmptyItemException(Exception):
 	pass
 
