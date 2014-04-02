@@ -140,6 +140,14 @@ class Body(Thing):
 	MAX_HP = None
 
 
+class Creature(Body):
+	MAX_HP = 100
+
+
+class Bat(Creature):
+	MAX_HP = 5
+
+
 class Player(Body):
 	COLOR = (46, 204, 113)
 	MAX_HP = 100
@@ -174,10 +182,6 @@ class Player(Body):
 	@property
 	def light(self):
 		return self.inventory.light
-
-
-class Creature(Body):
-	MAX_HP = 100
 
 
 class Inventory(list):
