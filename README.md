@@ -1,12 +1,12 @@
-# Disclosure - A mini maze game. #
+# Disclosure - A mini maze game.
 
 You have to reach the exit of the maze, but be careful, your flashlight won't last forever...
 
-## Items ##
+## Items
 
 You might find some items on your way, they will be stored automagically in your inventory. Here is a list of the available items and their respective use:
 
-### Lights ###
+### Lights
 
 The more light, the less dark.
 
@@ -15,7 +15,7 @@ The more light, the less dark.
  * Flashlight
  * Neon
 
-### PassThroughs ###
+### PassThroughs
 
 The heck? Did you just go through this wall?
 Be careful, it might not be _that_ helpful in the dark...
@@ -24,7 +24,7 @@ Be careful, it might not be _that_ helpful in the dark...
  * Poleaxe
  * Crowbar
 
-## Commands ##
+## Commands
 
 There is a command bar on top of the map. It can be used to do several stuff, here is a list of what you can do with it (the `>` is optional):
 
