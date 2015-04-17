@@ -2,6 +2,8 @@
 
 You have to reach the exit of the maze, but be careful, your flashlight won't last forever...
 
+![Disclosure](http://i.gjcdn.net/imgserver/game-header/950/24294_wujrs7jy.jpg)
+
 ## Items
 
 You might find some items on your way, they will be stored automagically in your inventory. Here is a list of the available items and their respective use:
