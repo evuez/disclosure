@@ -2,7 +2,7 @@
 
 You have to reach the exit of the maze, but be careful, your flashlight won't last forever...
 
-![Disclosure](http://i.gjcdn.net/imgserver/game-header/950/24294_wujrs7jy.jpg)
+![Disclosure](http://i.imgur.com/v5CvUkT.jpg)
 
 ## Items
 
