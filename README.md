@@ -37,3 +37,10 @@ There is a command bar on top of the map. It can be used to do several stuff, he
  * __black is black__ just try it. you have to finish your level before it takes effect
 
 There is an hidden command too, try with something bright.
+
+## Setup
+
+- `git clone https://github.com/evuez/disclosure`
+- `cd disclosure`
+- `python main.py`
+- `> use 4a6ee54c-7` for instance :)
